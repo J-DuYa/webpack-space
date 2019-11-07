@@ -1,8 +1,21 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 格式化压缩代码
 
 module.exports = {
 	mode: "production",
+	optimization: { // 优化css 或 js
+		minimizer: [
+			new UglifyJsPlugin({
+				cache: true,
+				parallel: true,
+				sourceMap: true
+			}),
+			new OptimizeCssAssetsPlugin()
+		]
+	},
 	devServer: {
 		port: 3000,
 		progress: true, // 进度条
@@ -25,6 +38,11 @@ module.exports = {
 				collapseWhitespace: true
 			},
 			hash: true
+		}),
+		new MiniCssExtractPlugin({
+			filename: "[name].css",
+			chunkFilename: "[id].css",
+			ignoreOrder: false // Enable to remove warnings about conflicting order
 		})
 	],
 	// module
@@ -38,10 +56,7 @@ module.exports = {
 				test: /\.css$/,
 				use: [
 					{
-						loader: "style-loader",
-						// options: {
-						// 	insert: "top"
-						// }
+						loader: MiniCssExtractPlugin.loader
 					},
 					"css-loader"
 				]
@@ -51,10 +66,7 @@ module.exports = {
 				test: /\.less$/,
 				use: [
 					{
-						loader: "style-loader",
-						// options: {
-						// 	insert: "top"
-						// }
+						loader: MiniCssExtractPlugin.loader
 					},
 					"css-loader",
 					"less-loader"

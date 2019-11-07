@@ -53,10 +53,7 @@ module: {
 			test: /\.css$/,
 			use: [
 				{
-					loader: "style-loader",
-					// options: {
-					// 	insert: "top"
-					// }
+					loader: MiniCssExtractPlugin.loader
 				},
 				"css-loader"
 			]
@@ -65,10 +62,7 @@ module: {
 			test: /\.less$/,
 			use: [
 				{
-					loader: "style-loader",
-					// options: {
-					// 	insert: "top"
-					// }
+					loader: MiniCssExtractPlugin.loader
 				},
 				"css-loader",
 				"less-loader"
@@ -78,3 +72,10 @@ module: {
 }
 
 ```
+
+// 需要的插件
+mini-css-extract-plugin 压缩css
+autoPrefixer
+optimize-css-assets-webpack-plugin
+
+warning: uglifyjs-webpack-plugin这个好像没起作用 fuck the idea!
