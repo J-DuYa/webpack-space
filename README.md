@@ -42,3 +42,39 @@ module.exports = {
 	]
 };
 ```
+
+4. 处理css模块
+```js
+// webpack.config.js
+模块内配置css解析
+module: {
+	rules: [
+		{
+			test: /\.css$/,
+			use: [
+				{
+					loader: "style-loader",
+					// options: {
+					// 	insert: "top"
+					// }
+				},
+				"css-loader"
+			]
+		},
+		{ // 解析less-loader
+			test: /\.less$/,
+			use: [
+				{
+					loader: "style-loader",
+					// options: {
+					// 	insert: "top"
+					// }
+				},
+				"css-loader",
+				"less-loader"
+			]
+		}
+	]
+}
+
+```

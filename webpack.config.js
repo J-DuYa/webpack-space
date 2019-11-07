@@ -26,5 +26,40 @@ module.exports = {
 			},
 			hash: true
 		})
-	]
+	],
+	// module
+	module: { // 模块
+		rules: [ // 规则 css-loader 接续@import这种语法 style-loader 把css插入到head标签中
+			// loader的特点希望单一
+			// 多个loader需要[]
+			// loader的顺序默认从右往左执行
+			// loader还可以写成对象样式
+			{
+				test: /\.css$/,
+				use: [
+					{
+						loader: "style-loader",
+						// options: {
+						// 	insert: "top"
+						// }
+					},
+					"css-loader"
+				]
+			},
+			// 处理less
+			{
+				test: /\.less$/,
+				use: [
+					{
+						loader: "style-loader",
+						// options: {
+						// 	insert: "top"
+						// }
+					},
+					"css-loader",
+					"less-loader"
+				]
+			},
+		]
+	}
 };
