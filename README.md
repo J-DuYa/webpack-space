@@ -19,7 +19,7 @@ module.exports = {
 		port: 3000, //端口号
 		progress: true, // 进度条
 		contentBase: "./build", // ？
-		compress: true // 对所有服务启动gzio压缩
+		compress: true // 对所有服务启动gzip压缩
 	},
 	// 入口
 	entry: "./src/main.js",
@@ -75,7 +75,72 @@ module: {
 
 // 需要的插件
 mini-css-extract-plugin 压缩css
-autoPrefixer
+<!-- 补全兼容css -->
+autoprefixer
+postcss-loader(需要单独配置一个postcss.config.js)
 optimize-css-assets-webpack-plugin
+<!-- 解析es6 将es6转成es5 -->
+babel-loader
+babel-core
+@babel/core
+@babel/preset-env
+<!-- 解析class -->
+@babel/plugin-proposal-class-properties 
+```javascript
+module: {
+	rules: [
+		{
+			test: /\.js$/,
+			use: {
+				loader: "babel-loader",
+				options: {
+					presets: [
+						"@babel/preset-env"
+					],
+					plugins: [
+						"@babel/plugin-proposal-class-properties"
+					]
+				}
+			}
+		}
+	]
+}	
+```
+@babel/plugin-proposal-decorators
+@babel/plugin-transform-runtime
+@babel/runtime 使用-S 生产环境使用
+@babel/polyfill
+<!-- 图片处理 -->
+file-loader
+url-loader
+```javascript
+{
+	test: /\.(png|jpg|gif)/,
+	use: {
+		loader: "url-loader",
+		options: {
+			limit: 1,
+			outpath: "images/"
+		}
+	}
+}
+```
+
+```
+// 配置
+devtool 
+1) "source-map" // 增加映射单独文件
+2) "eval-source-map" // 不会产生单独的文件 但是可以显示行和列
+两者的区别：不会产生列 但是是一个单独的映射文件
+3) "cleap-module-source-map" 产生后可以保留起来
+4) "cleap-module-eval-source-map" 不会产生文件 集成在打包后的文件中，不会产生列
+```
 
 warning: uglifyjs-webpack-plugin这个好像没起作用 fuck the idea!
+
+## postcss.config.js
+```javascript
+module.exports = {
+	plugins: [ require("autoprefixer") ]
+}
+```

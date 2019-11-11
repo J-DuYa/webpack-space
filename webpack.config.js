@@ -5,7 +5,7 @@ const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 格式化压缩代码
 
 module.exports = {
-	mode: "production",
+	mode: "development",
 	optimization: { // 优化css 或 js
 		minimizer: [
 			new UglifyJsPlugin({
@@ -47,7 +47,8 @@ module.exports = {
 	],
 	// module
 	module: { // 模块
-		rules: [ // 规则 css-loader 接续@import这种语法 style-loader 把css插入到head标签中
+		rules: [ 
+			// 规则 css-loader 接续@import这种语法 style-loader 把css插入到head标签中
 			// loader的特点希望单一
 			// 多个loader需要[]
 			// loader的顺序默认从右往左执行
@@ -72,6 +73,22 @@ module.exports = {
 					"less-loader"
 				]
 			},
+			// 将es6转化成es5
+			{
+				test: /\.m?js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: "babel-loader",
+					options: { // 用babel-loader 需要把es6 -> es5
+						presets: ['@babel/preset-env'],
+						plugins: [
+							["@babel/plugin-proposal-decorators", { "legacy": true }],
+							["@babel/plugin-proposal-class-properties", { "loose": true }], // 插件-提案-类-属性
+							"@babel/plugin-transform-runtime"
+						]
+					}
+				}
+			}
 		]
 	}
 };
