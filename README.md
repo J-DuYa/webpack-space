@@ -136,6 +136,10 @@ devtool
 4) "cleap-module-eval-source-map" 不会产生文件 集成在打包后的文件中，不会产生列
 ```
 
+clean-webpack-plugin // 清除某一个文件夹 重新生成新的
+copy-webpack-plugin // 拷贝文件
+banner-plugin (webpack内部插件) // 版权声明
+
 warning: uglifyjs-webpack-plugin这个好像没起作用 fuck the idea!
 
 ## postcss.config.js

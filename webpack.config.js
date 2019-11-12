@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 格式化压缩代码
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
 	mode: "development",
@@ -15,6 +18,12 @@ module.exports = {
 			}),
 			new OptimizeCssAssetsPlugin()
 		]
+	},
+	watch: true,
+	watchOptions: { //监控选项
+		poll: 1000,
+		aggregateTimeout: 500, // 防抖
+		ignored: /node_modules/
 	},
 	devServer: {
 		port: 3000,
@@ -43,7 +52,13 @@ module.exports = {
 			filename: "[name].css",
 			chunkFilename: "[id].css",
 			ignoreOrder: false // Enable to remove warnings about conflicting order
-		})
+		}),
+		new CleanWebpackPlugin(),
+		new CopyWebpackPlugin([{
+			from: "./doc",
+			to: "./doc"
+		}]),
+		new webpack.BannerPlugin("Author is DuYa!Word hard.")
 	],
 	// module
 	module: { // 模块
