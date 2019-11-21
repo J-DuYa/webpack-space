@@ -148,3 +148,8 @@ module.exports = {
 	plugins: [ require("autoprefixer") ]
 }
 ```
+
+5 学习webpack内部机制
+
+- 同步hooks
+1. SyncHook

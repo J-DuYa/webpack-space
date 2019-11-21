@@ -1,3 +1,4 @@
+/** DuYa webpack */
 "use strict";
 import "./css/index.css";
 import "./css/common.less";
