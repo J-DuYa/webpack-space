@@ -12,3 +12,6 @@ AsyncParallelHook
 AsyncParallelBailHook (异步熔断)
 
 （异步串行）
+AsyncSeriesHook
+AsyncSeriesBailHook
+AsyncSeriesWaterfallHook

@@ -1,4 +1,4 @@
-class AsyncParallelHook {
+class AsyncSeriesHook {
 	constructor(args) {
 		this.tasks = [];
 	}
@@ -8,14 +8,16 @@ class AsyncParallelHook {
 		this.tasks.push(task);
 	}
 
-	promise(...args) {
-		let tasks = this.tasks.map(task => task(...args));
-		return Promise.all(tasks);
+	promise(...args) { // redux源码
+		let [first, ...others] = this.tasks;
+		return others.reduce((p, n) => {
+			return p.then(() => n(...args));
+		}, first(...args));
 	}
 
 }
 
-let hook = new AsyncParallelHook(["name"]);
+let hook = new AsyncSeriesHook(["name"]);
 
 hook.tapPromise("node", function(name) {
 	return new Promise((resolve, reject) => {
@@ -44,6 +46,6 @@ hook.tapPromise("webpack", function(name) {
 	});
 });
 
-hook.promise("DY").then(function() {
+hook.promise("DY").then(res => {
 	console.log("end");
 });
