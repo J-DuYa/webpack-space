@@ -7,6 +7,9 @@
     "build": "webpack --config webpack.config.js",
     "dev": "webpack-dev-server"
   },
+  "bin": {
+    "dy": "./bin/dy_webpack.js"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
