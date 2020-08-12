@@ -10,8 +10,8 @@ npm install webpack webpack-cli -D
 
 
 3. 手动配置webpack
-```js
-commonJs
+```javascript
+// 遵守commonJs
 module.exports = {
 	// 指定生产和开发 production development
 	mode: "development",
@@ -44,9 +44,9 @@ module.exports = {
 ```
 
 4. 处理css模块
-```js
+```javascript
 // webpack.config.js
-模块内配置css解析
+// 模块内配置css解析
 module: {
 	rules: [
 		{
